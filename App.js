@@ -29,8 +29,18 @@ export default function App() {
   const changeCounts = (amount, index) => {
     const newState = [...countables];
     newState[index].count += amount;
-    setCountables(newState);
-    saveCountables(newState);
+    if (newState[index].count < 0) {
+      console.log("Negative values not allowed");
+      //Toast.show("Duplicate names not allowed", {
+      //  duration: Toast.durations.LONG,
+      //});
+      newState[index].count = 0;
+      setCountables(newState);
+      saveCountables(newState);
+    } else if (newState[index].count >= 0) {
+      setCountables(newState);
+      saveCountables(newState);
+    }
   };
 
   const addNewCountable = (name) => {
@@ -42,6 +52,10 @@ export default function App() {
         //});
         return;
       }
+    }
+    if (name === "") {
+      console.log("Enter a name");
+      return;
     }
     const newState = [...countables, { name, count: 0 }];
     setCountables(newState);
