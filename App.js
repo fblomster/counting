@@ -6,6 +6,8 @@ import {
   KeyboardAvoidingView,
   View,
 } from "react-native";
+import { RootSiblingParent } from "react-native-root-siblings";
+import { Toast } from "react-native-root-toast";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { AddRow } from "./components/AddRow";
@@ -32,6 +34,15 @@ export default function App() {
   };
 
   const addNewCountable = (name) => {
+    for (let i = 0; i < countables.length; i++) {
+      if (countables[i].name === name) {
+        console.log("Duplicate name");
+        //Toast.show("Duplicate names not allowed", {
+        //  duration: Toast.durations.LONG,
+        //});
+        return;
+      }
+    }
     const newState = [...countables, { name, count: 0 }];
     setCountables(newState);
     saveCountables(newState);
@@ -39,26 +50,28 @@ export default function App() {
 
   // https://medium.com/@nickyang0501/keyboardavoidingview-not-working-properly-c413c0a200d4
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
-    >
-      <SafeAreaView style={styles.container}>
-        <ScrollView>
-          {countables.map((countable, index) => (
-            <CountableRow
-              countable={countable}
-              key={countable.name}
-              changeCounts={changeCounts}
-              index={index}
-            />
-          ))}
-          <View style={{ flex: 1 }} />
-        </ScrollView>
-        <AddRow addNewCountable={addNewCountable} />
-        <StatusBar style="auto" />
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+    <RootSiblingParent>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <SafeAreaView style={styles.container}>
+          <ScrollView>
+            {countables.map((countable, index) => (
+              <CountableRow
+                countable={countable}
+                key={countable.name}
+                changeCounts={changeCounts}
+                index={index}
+              />
+            ))}
+            <View style={{ flex: 1 }} />
+          </ScrollView>
+          <AddRow addNewCountable={addNewCountable} />
+          <StatusBar style="auto" />
+        </SafeAreaView>
+      </KeyboardAvoidingView>
+    </RootSiblingParent>
   );
 }
 
