@@ -14,4 +14,15 @@ export const CommonStyles = StyleSheet.create({
     paddingEnd: 20,
     paddingStart: 20,
   },
+  addRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderColor: "darkblue",
+    backgroundColor: "lightgrey",
+    borderWidth: 3,
+    borderRadius: 5,
+    margin: 5,
+    paddingEnd: 20,
+    paddingStart: 20,
+  },
 });
