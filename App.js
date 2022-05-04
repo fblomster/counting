@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { RootSiblingParent } from "react-native-root-siblings";
-import { Toast } from "react-native-root-toast";
+import Toast from "react-native-root-toast";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { AddRow } from "./components/AddRow";
@@ -31,9 +31,9 @@ export default function App() {
     newState[index].count += amount;
     if (newState[index].count < 0) {
       console.log("Negative values not allowed");
-      //Toast.show("Duplicate names not allowed", {
-      //  duration: Toast.durations.LONG,
-      //});
+      Toast.show("Negative values not allowed", {
+        duration: Toast.durations.LONG,
+      });
       newState[index].count = 0;
       setCountables(newState);
       saveCountables(newState);
@@ -47,14 +47,17 @@ export default function App() {
     for (let i = 0; i < countables.length; i++) {
       if (countables[i].name === name) {
         console.log("Duplicate name");
-        //Toast.show("Duplicate names not allowed", {
-        //  duration: Toast.durations.LONG,
-        //});
+        Toast.show("Duplicate names not allowed", {
+          duration: Toast.durations.LONG,
+        });
         return;
       }
     }
     if (name === "") {
       console.log("Enter a name");
+      Toast.show("Enter a name, please!", {
+        duration: Toast.durations.LONG,
+      });
       return;
     }
     const newState = [...countables, { name, count: 0 }];
